@@ -13,13 +13,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primaryColor: Colors.red),
-      home: const MyHomePage(title: 'GuardU'),
+      home: MainPage(title: 'GuardU'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -33,11 +33,12 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainPageState extends State<MainPage> {
   final TextEditingController _controller = TextEditingController();
+  int selectedPage = 1;
   Color? _primaryColor;
   Icon openLock = Icon(Icons.lock_open);
 
@@ -54,91 +55,140 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.pest_control_sharp,
-                    color: _primaryColor,
-                    size: 100,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextField(
-                    style: TextStyle(fontSize: 20.0, color: _primaryColor),
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Enter your password',
-                      hintStyle:
-                          TextStyle(fontSize: 20.0, color: _primaryColor),
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.pest_control_sharp,
+                      color: _primaryColor,
+                      size: 100,
                     ),
-                    onChanged: (text) {
-                      setState(() {
-                        _controller.text = text;
-                        if (text.length > 15 || isSafe(text)) {
-                          _primaryColor = Colors.green;
-                        } else {
-                          _primaryColor = Colors.red;
-                        }
-                      });
-                    },
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                      style: TextStyle(fontSize: 20.0, color: _primaryColor),
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Enter your password',
+                        hintStyle:
+                            TextStyle(fontSize: 20.0, color: _primaryColor),
                       ),
-                      _controller.text.length < 8
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Icon(Icons.close, color: _primaryColor),
-                                Text(
-                                    'Password must be longer than 8 characters.',
-                                    style: TextStyle(color: _primaryColor)),
-                              ],
-                            )
-                          : (_controller.text.length > 15)
-                              ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Icon(Icons.check, color: Colors.green),
-                                    Text(
-                                        'Password is longer than 15 characters.',
-                                        style: TextStyle(color: Colors.green)),
-                                  ],
-                                )
-                              : Column(children: [
-                                  Row(
+                      onChanged: (text) {
+                        setState(() {
+                          if (text.isNotEmpty) {
+                            _controller.text = text;
+                          }
+
+                          if (text.length > 15) {
+                            _primaryColor = Colors.green;
+                          } else {
+                            _primaryColor = Colors.red;
+                          }
+                        });
+                      },
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        _controller.text.length < 8
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(Icons.close, color: _primaryColor),
+                                  Text(
+                                      'Password must be longer than 8 characters.',
+                                      style: TextStyle(color: _primaryColor)),
+                                ],
+                              )
+                            : (_controller.text.length > 15)
+                                ? Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       Icon(Icons.check, color: Colors.green),
                                       Text(
-                                          'Password is longer than 8 characters.',
+                                          'Password is longer than 15 characters.',
                                           style:
                                               TextStyle(color: Colors.green)),
                                     ],
-                                  ),
-                                ]),
-                    ],
-                  ),
-                ],
+                                  )
+                                : Column(children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Icon(Icons.check, color: Colors.green),
+                                        Text(
+                                            'Password is longer than 8 characters.',
+                                            style:
+                                                TextStyle(color: Colors.green)),
+                                      ],
+                                    ),
+                                  ]),
+                        _controller.text.isNotEmpty
+                            ? ElevatedButton(
+                                onPressed: () {
+                                  _controller.clear();
+                                  setState(() {});
+                                },
+                                child: Icon(
+                                  Icons.abc,
+                                  color: _primaryColor,
+                                ),
+                              )
+                            : Container()
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.memory, size: 30), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.shield, size: 30), label: 'Inbox'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.info, size: 30), label: 'Account'),
+          ],
+          selectedItemColor: _primaryColor,
+          elevation: 5.0,
+          unselectedItemColor: Colors.grey[700],
+          currentIndex: selectedPage,
+          backgroundColor: Colors.grey[900],
+          onTap: (index) {
+            setState(() {
+              selectedPage = index;
+            });
+          },
+        )
+        // This trailing comma makes auto-formatting nicer for build methods.
+        );
+  }
+}
+
+class SecondScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Multi Page Application Page-1"),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
+      body: Text("Another Page...!!!!!!"),
     );
   }
 }
