@@ -1,7 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeNotifier(),
+      child: MyApp(),
+    ),
+  );
+}
+
+class ThemeNotifier extends ChangeNotifier {
+  ThemeData _themeData = ThemeData(
+    primaryColor: Colors.red,
+  );
+
+  ThemeNotifier() {
+    _themeData = ThemeData(
+      primaryColor: Colors.red,
+    );
+  }
+
+  getTheme() => _themeData;
+
+  setTheme(ThemeData theme) {
+    _themeData = theme;
+    notifyListeners();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -10,20 +35,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.red,
-      ),
+      theme: themeNotifier.getTheme(),
       home: const MyHomePage(title: 'asdfasfasdfasdfadsfadsf'),
     );
   }
@@ -49,6 +65,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _controller = TextEditingController();
+  var mainColor = Colors.red;
 
   @override
   Widget build(BuildContext context) {
@@ -64,21 +81,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Icon(
                     Icons.pest_control_sharp,
-                    color: Colors.red,
+                    color: mainColor,
                     size: 100,
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   TextField(
-                    style: TextStyle(fontSize: 20.0, color: Colors.red),
+                    style: TextStyle(fontSize: 20.0, color: mainColor),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 5.0),
-                      ),
+                      border: InputBorder.none,
                       hintText: 'Enter your password',
-                      hintStyle: TextStyle(fontSize: 20.0, color: Colors.red),
+                      hintStyle: TextStyle(fontSize: 20.0, color: mainColor),
                     ),
                     onChanged: (text) {
                       setState(() {
@@ -95,22 +110,29 @@ class _MyHomePageState extends State<MyHomePage> {
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Icon(Icons.close, color: Colors.red),
+                                Icon(Icons.close,
+                                    color: Theme.of(context).primaryColor),
                                 Text(
                                     'Password must be longer than 8 characters.',
-                                    style: TextStyle(color: Colors.red)),
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor)),
                               ],
                             )
-                          : Column(children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.check, color: Colors.green),
-                                  Text(
-                                      'Password must be longer than 8 characters.',
-                                      style: TextStyle(color: Colors.green)),
-                                ],
-                              ),
-                            ]),
+                          : (_controller.text.length > 15)
+                              ? them
+                              : Column(children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Icon(Icons.check, color: Colors.green),
+                                      Text(
+                                          'Password is longer than 8 characters.',
+                                          style:
+                                              TextStyle(color: Colors.green)),
+                                    ],
+                                  ),
+                                ]),
                     ],
                   ),
                 ],
