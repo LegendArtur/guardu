@@ -39,6 +39,13 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final TextEditingController _controller = TextEditingController();
   int selectedPage = 1;
+  final upperPattern = RegExp(r'^(?=.*[A-Z])');
+  final lowerPattern = RegExp(r'^(?=.*[a-z])');
+  final digitPattern = RegExp(r'^(?=.*[0-9])');
+  final oneSpCharPattern = RegExp(r'^(?=.*[!@#\$%^&])');
+  final eightCharspattern = RegExp(r'^(?=.{8,})');
+  final fourteenCharspattern = RegExp(r'^(?=.{14,})');
+
   Color? _primaryColor;
   Icon openLock = Icon(Icons.lock_open);
 
