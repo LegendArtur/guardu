@@ -38,7 +38,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final TextEditingController _controller = TextEditingController();
-  int selectedPage = 1;
   final upperPattern = RegExp(r'^(?=.*[A-Z])');
   final lowerPattern = RegExp(r'^(?=.*[a-z])');
   final digitPattern = RegExp(r'^(?=.*[0-9])');
@@ -46,14 +45,10 @@ class _MainPageState extends State<MainPage> {
   final eightCharspattern = RegExp(r'^(?=.{8,})');
   final fourteenCharspattern = RegExp(r'^(?=.{14,})');
 
+  int currentIndex = 1;
+
   Color _primaryColor = Colors.red;
   Icon openLock = Icon(Icons.lock_open);
-
-  void _clear() {
-    setState(() {
-      _controller.clear();
-    });
-  }
 
   @override
   void initState() {
@@ -304,36 +299,25 @@ class _MainPageState extends State<MainPage> {
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.memory, size: 30), label: 'Home'),
+                icon: Icon(Icons.memory, size: 30), label: 'Generator'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.shield, size: 30), label: 'Inbox'),
+                icon: Icon(Icons.shield, size: 30), label: 'Password Tester'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.info, size: 30), label: 'Account'),
+                icon: Icon(Icons.info, size: 30), label: 'Info'),
           ],
           selectedItemColor: _primaryColor,
           elevation: 5.0,
           unselectedItemColor: Colors.grey[700],
-          currentIndex: selectedPage,
+          showUnselectedLabels: false,
+          currentIndex: currentIndex,
           backgroundColor: Colors.grey[900],
           onTap: (index) {
             setState(() {
-              selectedPage = index;
+              currentIndex = index;
             });
           },
         )
         // This trailing comma makes auto-formatting nicer for build methods.
         );
-  }
-}
-
-class SecondScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Multi Page Application Page-1"),
-      ),
-      body: Text("Another Page...!!!!!!"),
-    );
   }
 }
