@@ -83,9 +83,10 @@ class _MainPageState extends State<MainPage> {
                     TextField(
                       style: TextStyle(fontSize: 20.0, color: _primaryColor),
                       textAlign: TextAlign.center,
+                      cursorColor: Colors.white,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Enter your password',
+                        hintText: 'Enter your password here',
                         hintStyle:
                             TextStyle(fontSize: 20.0, color: _primaryColor),
                       ),
