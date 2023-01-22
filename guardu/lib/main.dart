@@ -73,8 +73,8 @@ class _MainPageState extends State<MainPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+              SizedBox(
+                width: 300,
                 child: Column(
                   children: [
                     Icon(
