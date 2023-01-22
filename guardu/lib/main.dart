@@ -46,7 +46,7 @@ class _MainPageState extends State<MainPage> {
   final eightCharspattern = RegExp(r'^(?=.{8,})');
   final fourteenCharspattern = RegExp(r'^(?=.{14,})');
 
-  Color? _primaryColor;
+  Color _primaryColor = Colors.red;
   Icon openLock = Icon(Icons.lock_open);
 
   void _clear() {
@@ -74,7 +74,7 @@ class _MainPageState extends State<MainPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: Column(
                   children: [
                     Icon(
@@ -83,7 +83,7 @@ class _MainPageState extends State<MainPage> {
                       size: 100,
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     TextField(
                       style: TextStyle(fontSize: 20.0, color: _primaryColor),
@@ -108,149 +108,192 @@ class _MainPageState extends State<MainPage> {
                         });
                       },
                     ),
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _controller.text.length < 8
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Icon(Icons.close, color: _primaryColor),
-                                  Text(
-                                      'Password must be longer than 8 characters.',
-                                      style: TextStyle(color: _primaryColor)),
-                                ],
-                              )
-                            : (_controller.text.length > 15)
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Icon(Icons.check, color: Colors.green),
-                                      Text(
-                                          'Password is longer than 15 characters.',
-                                          style:
-                                              TextStyle(color: Colors.green)),
-                                    ],
-                                  )
-                                : Column(children: [
-                                    Row(
+                    Container(
+                      margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _controller.text.length < 8
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(Icons.close, color: _primaryColor),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text('Smaller than 8 characters.',
+                                        style: TextStyle(color: _primaryColor)),
+                                  ],
+                                )
+                              : (_controller.text.length > 15)
+                                  ? Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Icon(Icons.check, color: Colors.green),
-                                        Text(
-                                            'Password is longer than 8 characters.',
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text('Longer than 15 characters.',
                                             style:
                                                 TextStyle(color: Colors.green)),
                                       ],
-                                    ),
-                                    (upperPattern.hasMatch(_controller.text))
-                                        ? Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Icon(Icons.check,
-                                                  color: Colors.green),
-                                              Text(
-                                                  'Password has at least one upperCase letter.',
-                                                  style: TextStyle(
-                                                      color: Colors.green)),
-                                            ],
-                                          )
-                                        : Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Icon(Icons.check,
-                                                  color: Colors.red),
-                                              Text(
-                                                  'Password does not have at least one upperCase letter.',
-                                                  style: TextStyle(
-                                                      color: Colors.red)),
-                                            ],
+                                    )
+                                  : Column(children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(Icons.check,
+                                              color: Colors.green),
+                                          SizedBox(
+                                            width: 10,
                                           ),
-                                    (lowerPattern.hasMatch(_controller.text))
-                                        ? Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Icon(Icons.check,
-                                                  color: Colors.green),
-                                              Text(
-                                                  'Password has at least one lowerCase letter.',
-                                                  style: TextStyle(
-                                                      color: Colors.green)),
-                                            ],
-                                          )
-                                        : Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Icon(Icons.check,
-                                                  color: Colors.red),
-                                              Text(
-                                                  'Password does not have at least one lowerCase letter.',
-                                                  style: TextStyle(
-                                                      color: Colors.red)),
-                                            ],
-                                          ),
-                                    (digitPattern.hasMatch(_controller.text))
-                                        ? Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Icon(Icons.check,
-                                                  color: Colors.green),
-                                              Text(
-                                                  'Password has at least one digit.',
-                                                  style: TextStyle(
-                                                      color: Colors.green)),
-                                            ],
-                                          )
-                                        : Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Icon(Icons.check,
-                                                  color: Colors.red),
-                                              Text(
-                                                  'Password does not have at least one digit.',
-                                                  style: TextStyle(
-                                                      color: Colors.red)),
-                                            ],
-                                          ),
-                                    (oneSpCharPattern
-                                            .hasMatch(_controller.text))
-                                        ? Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Icon(Icons.check,
-                                                  color: Colors.green),
-                                              Text(
-                                                  'Password has at least one special character.',
-                                                  style: TextStyle(
-                                                      color: Colors.green)),
-                                            ],
-                                          )
-                                        : Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Icon(Icons.check,
-                                                  color: Colors.red),
-                                              Text(
-                                                  'Password does not have at least one special character.',
-                                                  style: TextStyle(
-                                                      color: Colors.red)),
-                                            ],
-                                          ),
-                                  ]),
-                      ],
+                                          Text('Longer than 8 characters.',
+                                              style: TextStyle(
+                                                  color: Colors.green)),
+                                        ],
+                                      ),
+                                      (upperPattern.hasMatch(_controller.text))
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Icon(Icons.check,
+                                                    color: Colors.green),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                    'At least one uppercase letter.',
+                                                    style: TextStyle(
+                                                        color: Colors.green)),
+                                              ],
+                                            )
+                                          : Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Icon(Icons.close,
+                                                    color: _primaryColor),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                    'At least one uppercase letter.',
+                                                    style: TextStyle(
+                                                        color: _primaryColor)),
+                                              ],
+                                            ),
+                                      (lowerPattern.hasMatch(_controller.text))
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Icon(Icons.check,
+                                                    color: Colors.green),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                    'At least one lowercase letter.',
+                                                    style: TextStyle(
+                                                        color: Colors.green)),
+                                              ],
+                                            )
+                                          : Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Icon(Icons.close,
+                                                    color: _primaryColor),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                    'At least one lowercase letter.',
+                                                    style: TextStyle(
+                                                        color: _primaryColor)),
+                                              ],
+                                            ),
+                                      (digitPattern.hasMatch(_controller.text))
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Icon(Icons.check,
+                                                    color: Colors.green),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                    'Password has at least one digit.',
+                                                    style: TextStyle(
+                                                        color: Colors.green)),
+                                              ],
+                                            )
+                                          : Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Icon(Icons.close,
+                                                    color: _primaryColor),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text('At least one digit.',
+                                                    style: TextStyle(
+                                                        color: _primaryColor)),
+                                              ],
+                                            ),
+                                      (oneSpCharPattern
+                                              .hasMatch(_controller.text))
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Icon(Icons.check,
+                                                    color: Colors.green),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                    'At least one special character.',
+                                                    style: TextStyle(
+                                                        color: Colors.green)),
+                                              ],
+                                            )
+                                          : Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Icon(Icons.close,
+                                                    color: _primaryColor),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                    'At least one special character.',
+                                                    style: TextStyle(
+                                                        color: _primaryColor)),
+                                              ],
+                                            ),
+                                    ]),
+                        ],
+                      ),
                     ),
                   ],
                 ),
