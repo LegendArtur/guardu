@@ -65,7 +65,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _controller = TextEditingController();
-  var mainColor = Colors.red;
+  final upperPattern = RegExp(r'^(?=.*[A-Z])');
+  final lowerPattern = RegExp(r'^(?=.*[a-z])');
+  final digitPattern = RegExp(r'^(?=.*[0-9])');
+  final oneSpCharPattern = RegExp(r'^(?=.*[!@#\$%^&])');
+  final eightCharspattern = RegExp(r'^(?=.{8,})');
+  final fourteenCharspattern = RegExp(r'^(?=.{14,})');
+
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                             )
                           : (_controller.text.length > 15)
-                              ? them
+                              ? 
                               : Column(children: [
+                                  //Longer than 8 characters
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
@@ -132,6 +139,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                               TextStyle(color: Colors.green)),
                                     ],
                                   ),
+
+                                  //Longer than 8 characters
+                                  upperPattern.hasMatch(_controller.text)
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Icon(Icons.check, color: Colors.green),
+                                      Text(
+                                          'Password is longer than 8 characters.',
+                                          style:
+                                              TextStyle(color: Colors.green)),
+                                    ],
+                                  ),
+
                                 ]),
                     ],
                   ),
