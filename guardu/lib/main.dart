@@ -142,6 +142,107 @@ class _MainPageState extends State<MainPage> {
                                                 TextStyle(color: Colors.green)),
                                       ],
                                     ),
+                                    (upperPattern.hasMatch(_controller.text))
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(Icons.check,
+                                                  color: Colors.green),
+                                              Text(
+                                                  'Password has at least one upperCase letter.',
+                                                  style: TextStyle(
+                                                      color: Colors.green)),
+                                            ],
+                                          )
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(Icons.check,
+                                                  color: Colors.red),
+                                              Text(
+                                                  'Password does not have at least one upperCase letter.',
+                                                  style: TextStyle(
+                                                      color: Colors.red)),
+                                            ],
+                                          ),
+                                    (lowerPattern.hasMatch(_controller.text))
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(Icons.check,
+                                                  color: Colors.green),
+                                              Text(
+                                                  'Password has at least one lowerCase letter.',
+                                                  style: TextStyle(
+                                                      color: Colors.green)),
+                                            ],
+                                          )
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(Icons.check,
+                                                  color: Colors.red),
+                                              Text(
+                                                  'Password does not have at least one lowerCase letter.',
+                                                  style: TextStyle(
+                                                      color: Colors.red)),
+                                            ],
+                                          ),
+                                    (digitPattern.hasMatch(_controller.text))
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(Icons.check,
+                                                  color: Colors.green),
+                                              Text(
+                                                  'Password has at least one digit.',
+                                                  style: TextStyle(
+                                                      color: Colors.green)),
+                                            ],
+                                          )
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(Icons.check,
+                                                  color: Colors.red),
+                                              Text(
+                                                  'Password does not have at least one digit.',
+                                                  style: TextStyle(
+                                                      color: Colors.red)),
+                                            ],
+                                          ),
+                                    (oneSpCharPattern
+                                            .hasMatch(_controller.text))
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(Icons.check,
+                                                  color: Colors.green),
+                                              Text(
+                                                  'Password has at least one special character.',
+                                                  style: TextStyle(
+                                                      color: Colors.green)),
+                                            ],
+                                          )
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(Icons.check,
+                                                  color: Colors.red),
+                                              Text(
+                                                  'Password does not have at least one special character.',
+                                                  style: TextStyle(
+                                                      color: Colors.red)),
+                                            ],
+                                          ),
                                   ]),
                         _controller.text.isNotEmpty
                             ? ElevatedButton(
