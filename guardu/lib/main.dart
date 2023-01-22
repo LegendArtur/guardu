@@ -49,6 +49,12 @@ class _MainPageState extends State<MainPage> {
   Color? _primaryColor;
   Icon openLock = Icon(Icons.lock_open);
 
+  void _clear() {
+    setState(() {
+      _controller.clear();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -244,18 +250,6 @@ class _MainPageState extends State<MainPage> {
                                             ],
                                           ),
                                   ]),
-                        _controller.text.isNotEmpty
-                            ? ElevatedButton(
-                                onPressed: () {
-                                  _controller.clear();
-                                  setState(() {});
-                                },
-                                child: Icon(
-                                  Icons.abc,
-                                  color: _primaryColor,
-                                ),
-                              )
-                            : Container()
                       ],
                     ),
                   ],
