@@ -1,32 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeNotifier(),
-      child: MyApp(),
-    ),
-  );
-}
-
-class ThemeNotifier extends ChangeNotifier {
-  ThemeData _themeData = ThemeData(
-    primaryColor: Colors.red,
-  );
-
-  ThemeNotifier() {
-    _themeData = ThemeData(
-      primaryColor: Colors.red,
-    );
-  }
-
-  getTheme() => _themeData;
-
-  setTheme(ThemeData theme) {
-    _themeData = theme;
-    notifyListeners();
-  }
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -35,12 +10,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
-
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: themeNotifier.getTheme(),
-      home: const MyHomePage(title: 'asdfasfasdfasdfadsfadsf'),
+      theme: ThemeData(primaryColor: Colors.red),
+      home: const MyHomePage(title: 'GuardU'),
     );
   }
 }
@@ -65,7 +38,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _controller = TextEditingController();
-  var mainColor = Colors.red;
+  Color? _primaryColor;
+  Icon openLock = Icon(Icons.lock_open);
+
+  @override
+  void initState() {
+    super.initState();
+    _primaryColor = Colors.red;
+  }
+
+  bool isSafe(String password) {
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,23 +65,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Icon(
                     Icons.pest_control_sharp,
-                    color: mainColor,
+                    color: _primaryColor,
                     size: 100,
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   TextField(
-                    style: TextStyle(fontSize: 20.0, color: mainColor),
+                    style: TextStyle(fontSize: 20.0, color: _primaryColor),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Enter your password',
-                      hintStyle: TextStyle(fontSize: 20.0, color: mainColor),
+                      hintStyle:
+                          TextStyle(fontSize: 20.0, color: _primaryColor),
                     ),
                     onChanged: (text) {
                       setState(() {
                         _controller.text = text;
+                        if (text.length > 15 || isSafe(text)) {
+                          _primaryColor = Colors.green;
+                        } else {
+                          _primaryColor = Colors.red;
+                        }
                       });
                     },
                   ),
@@ -110,16 +100,23 @@ class _MyHomePageState extends State<MyHomePage> {
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Icon(Icons.close,
-                                    color: Theme.of(context).primaryColor),
+                                Icon(Icons.close, color: _primaryColor),
                                 Text(
                                     'Password must be longer than 8 characters.',
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor)),
+                                    style: TextStyle(color: _primaryColor)),
                               ],
                             )
                           : (_controller.text.length > 15)
-                              ? them
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Icon(Icons.check, color: Colors.green),
+                                    Text(
+                                        'Password is longer than 15 characters.',
+                                        style: TextStyle(color: Colors.green)),
+                                  ],
+                                )
                               : Column(children: [
                                   Row(
                                     mainAxisAlignment:
